@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     database_engine: str = 'postgresql+psycopg'
     database_ip: str = 'localhost'
     database_port: str = '5432'
-    database_name: str = 'wiki'
+    database_name: str = 'news'
     database_username: str = 'faroosha'
     database_password: str = '1419'
 
@@ -37,6 +37,10 @@ class Settings(BaseSettings):
     session_expire_minute : int = 60
 
     stale_ttl : int = 15
+
+    # News =====================================
+    author_rights: bool = True
+    image_max_size_mb: int = 5
 
     # Password policy ==========================
     password_min_length : int = 10

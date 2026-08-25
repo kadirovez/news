@@ -1,30 +1,24 @@
 
-from uuid import UUID
-
 from slugify import slugify
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.models.wiki.nodes import Node
+from src.models.news.posts import Post
 
 
 async def generate_slug(
     session: AsyncSession,
     title: str,
-    parent_id: UUID | None,
-    exclude_node_id: UUID | None = None,
+    exclude_post_id: int | None = None,
 ) -> str:
-
-    base_slug = slugify(title, max_length=100) or "node"
+    base_slug = slugify(title, max_length=100) or "post"
     slug = base_slug
     counter = 1
 
     while True:
-        query = select(Node.id).where(
-            Node.parent_id == parent_id, Node.slug == slug
-        )
-        if exclude_node_id is not None:
-            query = query.where(Node.id != exclude_node_id)
+        query = select(Post.id).where(Post.slug == slug)
+        if exclude_post_id is not None:
+            query = query.where(Post.id != exclude_post_id)
 
         existing = await session.scalar(query)
         if existing is None:
