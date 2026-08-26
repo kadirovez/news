@@ -61,3 +61,11 @@ OTP_CODE_FIELD = Annotated[
     ),
 ]
 
+PHONE_FIELD = Annotated[
+    str,
+    Field(
+        ...,
+        pattern=r"^[0-9+\-() ]+$",
+        description="Phone number",
+    ),
+]
